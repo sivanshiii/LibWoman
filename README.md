@@ -1,5 +1,5 @@
 # LibMan
-a shitty (and unsecure) library management system made for a school project.
+a crappy (and unsecure) library management system made for a school project.
 
 
 all documentation is in the program
