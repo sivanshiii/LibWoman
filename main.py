@@ -125,24 +125,6 @@ def parseCommand(stat = str):
                     success() 
                 except:
                     commandFailedNoRecords()     
-        elif (stat.lower().startswith("book search")):
-            if ("(" not in stat or ")" not in stat):
-                commandFailedFormatError()
-            else:
-                args = stat[stat.index("(")+1:stat.index(")")]
-                execSQL(cursor, f"SELECT * FROM books WHERE Title like '%{args}%'" )
-                temp = []
-                for x in cursor:
-                    temptemp = []  
-                    for y in x:
-                      temptemp.append(y)
-                    temp.append(temptemp)   
-                try:
-                    df = pd.DataFrame(data = temp, columns = books )     
-                    print(df)   
-                    success()
-                except:
-                    commandFailedNoRecords()    
         elif (stat.lower().startswith("book searchisbn")):
             if ("(" not in stat or ")" not in stat):
                 commandFailedFormatError()
@@ -160,7 +142,25 @@ def parseCommand(stat = str):
                     print(df)   
                     success()
                 except:
-                    commandFailedNoRecords()    
+                    commandFailedNoRecords()             
+        elif (stat.lower().startswith("book search")):
+            if ("(" not in stat or ")" not in stat):
+                commandFailedFormatError()
+            else:
+                args = stat[stat.index("(")+1:stat.index(")")]
+                execSQL(cursor, f"SELECT * FROM books WHERE Title like '%{args}%'" )
+                temp = []
+                for x in cursor:
+                    temptemp = []  
+                    for y in x:
+                      temptemp.append(y)
+                    temp.append(temptemp)   
+                try:
+                    df = pd.DataFrame(data = temp, columns = books )     
+                    print(df)   
+                    success()
+                except:
+                    commandFailedNoRecords()       
         elif (stat.lower().startswith("book lend")):
             if ("(" not in stat or ")" not in stat or "," not in stat):
                 commandFailedFormatError()
