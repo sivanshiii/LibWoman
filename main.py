@@ -2,18 +2,14 @@ import mysql.connector
 import pandas as pd
 
 loggedin = False;    
-
 user = ""
 pas = ""
-
-
 member = ["MemberId","FirstName","LastName","DOJ"]
 books = ["BookID", "ISBN", "Title", "LendedTo"]
 bookslender = ["BookID", "ISBN", "Title", "LendeeID","LendeeName"]
 def execSQL(cursor, statement):
     cursor.reset(True);
     cursor.execute(statement)
-
 
 def login(usern, passw):
     global user
@@ -71,11 +67,13 @@ def parseCommand(stat = str):
                 commandFailedFormatError()
             else:
                 args = stat[stat.index("(")+1:stat.index(")")]
-                execSQL(cursor, "SELECT * FROM members WHERE memberid = " + args)
+                execSQL(cursor, "SELECT * FROM members WHERE MemberID = " + args)
                 temp = []
                 for x in cursor:
+                    temptemp = []  
                     for y in x:
-                      temp.append(y)
+                      temptemp.append(y)
+                    temp.append(temptemp) 
                 try:
                     df = pd.DataFrame(data = temp, columns = member )      
                     print(df)   
@@ -100,7 +98,7 @@ def parseCommand(stat = str):
                     success()
                 except:
                     commandFailedNoRecords()
-#===============================================================================================================================                
+             
     elif (stat.lower().startswith("book")):
         if (stat.lower().startswith("book add")):
             if ("(" not in stat or ")" not in stat or "," not in stat):
@@ -117,8 +115,10 @@ def parseCommand(stat = str):
                 execSQL(cursor, "SELECT * FROM books WHERE bookid = " + args)
                 temp = []
                 for x in cursor:
+                    temptemp = []  
                     for y in x:
-                      temp.append(y)
+                      temptemp.append(y)
+                    temp.append(temptemp) 
                 try:
                     df = pd.DataFrame(data = temp, columns = books )      
                     print(df)  
@@ -242,7 +242,7 @@ def parseCommand(stat = str):
                     success() 
                 except:
                     commandFailedNoRecords()  
-#===============================================================================================================================       
+   
     else:
         print("Command Failed, incorrect syntax") 
         help()            
@@ -275,13 +275,8 @@ NOTE: All arguments have to be passed in the "(arg1,arg2,...)" format.
   -> book liisbn (ISBN_no): Returns all information about the lending status of a
                             book(s) based on ISBN_no.
   -> book lititle (title): Returns all information about the lending status of a
-                           book(s) based on its title.
-                           
+                           book(s) based on its title.         
                            """
-
-
-
-
     print(helps)                     
     
 def commandFailedFormatError():
@@ -310,9 +305,7 @@ while True:
         statement = input("LibMan> ")
         if(statement.lower() not in ["exit", "help"]):
             parseCommand(statement)
-        
-        
-        
+                        
     if(statement == "help"):
         help()
         pass      
