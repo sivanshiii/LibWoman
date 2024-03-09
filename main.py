@@ -292,7 +292,7 @@ def success():
 while True:
     statement = ""
     if(not loggedin):
-       statement = input("Enter Username and Password separated by a comma (username,password): \nLibMan> ")
+       statement = input("Enter Username and Password separated by a comma (username,password)[slayy]: \nLibMan> ")
        if(statement.lower() not in ["exit", "help"]):
            if("," in statement):
               userpass = statement.split(",");
